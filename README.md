@@ -54,3 +54,54 @@ teacher (id, name, dept, IBAN)
                                   DROP <restricción>
     COLUMNA      |   RESTRICCIÓNS
   ADD      DROP    ADD        DROP
+
+
+DML --> DATA MANIPULATION LANGUAGE
+
+La principal diferencia entre DML y DDL es que DDL define estructuras de datos, mientras que DML permite introducir datos para realizar consultas o modificar los datos
+
+DML: Consta de INSERT, DELETE y UPDATE. Antes tenía SELECT, pero actualmente se ha eliminado.
+
+INSERT: Sirve para añadir datos. Su sintaxis es la siguiente: 
+
+INSERT INTO <nombre-de-la-tabla>
+	[(<atributo1>, <atributo2>,...)] 
+	(VALUES (<valor1>, <valor2>,...)
+	
+En lugar de VALUES podemos utilizar SELECT cumpliendo con 2 condiciones: 
+	- Mismo número de columnas
+	- Mismos dominios
+	
+**Tipos de datos**
+	DATETIME
+	NCHAR
+	INTEGER
+	
+EJEMPLO*** --> (1, 'cheese', 9.99), 
+	       (2, 'bread', 1.99),
+	       (3, 'milk', 2.99)
+	   
+UPDATE: Sirve para modificar datos. Su sintaxis es la siguiente:
+
+UPDATE <nombre-de-la-tabla>
+SET <atributo1> = <valor1>,
+    <atributo2> = <valor2>,
+[WHERE <predicado>];
+	    
+**EJEMPLO**
+UPDATE world 
+SET name='España',
+continent='Africa'
+WHERE name='Spain';
+
+El WHERE es optativo, pero en este ejemplo lo necesitamos ya que de no tenerlo todos los names de la base de datos se conviertan en 'Spain' y todos los continentes en 'Africa'
+
+DELETE: Sirve para borrar datos. Su sintaxis es la siguiente:
+
+DELETE FROM <nombre-de-la-tabla>
+[WHERE <predicado>]
+	
+**EJEMPLO**
+DELETE from world
+WHERE population > 100000000
+--Eliminaría cualquier país que tuviera más de 100 millones de habitantes--
