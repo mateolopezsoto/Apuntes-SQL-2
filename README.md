@@ -105,3 +105,10 @@ DELETE FROM <nombre-de-la-tabla>
 DELETE from world
 WHERE population > 100000000
 --Eliminaría cualquier país que tuviera más de 100 millones de habitantes--
+
+
+**TIPOS DE DATOS**
+	[Numéricos]: INTEGER, DECIMAL(preciso), REAL(no es preciso)
+	[Texto]: CHAR(longitud fija), VARCHAR(longitud variable), TEXT(longitud ilimitada variable)
+	[Tiempo]: DATE(dia, mes, año), TIME(hora, minuto, segundo [zona horaria]), TIMESTAMP(DATE + TIME)
+	[Otros]: BOOLEAN(true, false o null), MONEY, JSON, INET, CIDR, UUID
