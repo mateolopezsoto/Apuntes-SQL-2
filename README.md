@@ -1,26 +1,53 @@
 # Apuntes-SQL-2
-dept (id, name)
-teacher (id, name, dept, IBAN)
+DDL 
+	DDL es un lenguaje (DATA DEFINITION LANGUAGE) es un tipo de lenguaje que permite a los usuarios de las bases de datos implementar las tareas de definición de las estructuras que almacenarán los datos y sus procedimientos
+	
+	CREATE DOMAIN --> Sirve para crear dominios diferentes a los ya existentes.
+		CREATE DOMAIN Nombre_del_dominio Tipo_de_Dato;
+		
+	CREATE TABLE --> Como su propio nombre indica, se utiliza para crear tablas
+		CREATE TABLE Nombre_de_la_tabla (
+			Nombre_columna_1 Tipo_de_Dato [DEFAULT valor]
+				[restricciones]
+			);
+			
+	A la hora de crear tabla, a continuación de escribir CREATE TABLE podremos colocar IF NOT EXISTS, que verificará que la tabla no existe. Una vez hecho esto creará la tabla. Por lo tanto, si una tabla con el mismo nombre ya está en la base de datos, no la creará
+	
+	DROP TABLE --> Sirve para eliminar tablas. Podemos eliminar 1 o varias a la vez
+	
+		DROP TABLE Nombre_de_la_tabla;
+		DROP TABLE tabla_1, tabla_2;
+		
+	Despues de nombrar la tabla o tablas que queremos borrar, tenemos la opción de añadir CASCADE o RESTRICT
+	
+CASCADE: Eliminará cualquier dato asociado a la tabla que se elimine
+RESTRICT: No permite eliminar la tabla si tiene algún dato asociado
 
-[ON DELETE <nombre-de-la-restriccion>]
-	NO ACTION | CASCADE | SET NULL | SET DEFAULT
+	ALTER TABLE --> Se usa para modificar las diferentes tablas y tiene diferentes usos.
 	
-	Las restricciones de integridad referencial (definición)
+		1. Para renombrar la tabla, de la forma ALTER TABLE Tabla RENAME TO Otro_nombre;
+		2. Para añadir columnas, de la forma ALTER TABLE Tabla ADD COLUMN (Nombre_de_la_columna Tipo_de_Dato);
+		3. Para borrar columnas, de la forma ALTER TABLE Tabla DROP COLUMN (Nombre_de_la_columna) [CASCADE | RESTRICT];
+		4. Para añadir distracciones, de la forma ALTER TABLE Tabla ADD <restricción>;
+		5. Para borrar distracciones, de la forma ALTER TABLE Tabla DROP <restricción>;
+		
+
+RESTRICCIONES: Existen diferentes tipo de restricciones. Los más comunes son los siguientes: 
+
+	- NOT NULL --- Para indicar que no queremos que tenga elementos nulos. También se suele utilizar al lado de otras restricciones que sí puedan tener elementos nulos, para diferenciarlas entre si.
+	- UNIQUE --- Sirve para que todos los elementos de una columna sean diferentes
+	- CHECK --- Se utiliza para establecer condiciones que las columnas deben cumplir
+	- PRIMARY KEY --- Su uso es identificar la clave primaria de cada tabla
+	- FOREIGN KEY --- Señala la clave primaria de otra tabla para así asegurar su integridad referencial
+	- MATCH --- Se usa para especificar el grado de coincidencia que pueden tener la clave referenciada con las claves externas. Puede ser MATCH FULL (no permite que una clave externa sea NULL a no ser que lo sean todas), MATCH SIMPLE (permite que alguna columna de las claves externas sean NULL aunque otras no lo sean. Es el valor por defecto) o MATCH PARTIAL (es válida si una de las columnas de la clave externa es NULL y las demás columnas coincidan con los datos de la tabla referenciada y son NOT NULL o si todas las columnas son NOT NULL y coinciden con la tabla referenciada)
+	- ON DELETE / ON UPDATE --- Sirve para indicar que pasará cuando se borren o se modifiquen las tablas respectivamente. Hay 4 acciones diferentes permitidas.
+		i. CASCADE = Todo lo que esté asociado al dato borrado o modificado se eliminará o modificará también
+		ii. NO ACTION = El valor por defecto. No permite eliminar o actualizar el dato si algún objeto depende de él
+		iii. SET NULL = Se permite el borrado o modificado y las columnas de la clave externa se establecen como NULL
+		iiii. SET DEFAULT = Parecido a SET NULL, con la única diferencia de que las columnas de la clave externa se establecen con su valor predeterminado. Si no tienen este valor saldrá un error
 	
-		Cascade- Borra los registros en cascada, es decir, si tenemos dos tablas, la tabla que tiene la clave principal se irá borrando, por lo que la tabla secundaria lo hará también
-		No action- Sería su accionamiento predetermindado, no haría nada 
-		Set null- Establecería los valores de la clave secundaria en Null. Es la solución más fácil, pero provocaría un fallo en el rendimiento
-		Set default- Establece los datos por defecto en el departamento 0
-	
-    [MATCH FULL/PARTIAL]
-		Match Full nos indica que tienes el valor completo para ir a las tablas padre o tienes su ausencia, o lo que es lo mismo, solo vale si tienes todos los valores o si todos son nulls
-		Match Partial funciona aunque tenga un valor null si tiene otro valor capaz de referenciar a las tablas padre
-	
-  Restricción de unicidad:   
-[CONSTRAINT <nombre-de-la-restriccion>]
-  UNIQUE(<atributos>
-  
-  UNIQUE --> PRIMARY KEY
+* Cabe destacar que podemos utilizar CONSTRAINT para todas estas restricciones, aunque su uso no sea obligatorio. El único caso cuyo empleo es obligatorio es si tenemos más de una clave primaria
+** Las restricciones se pueden colocar tanto en la creación de la tabla como realizando un ALTER TABLE
   
   Restricción de comprobación: Se aplican a cada fila que se inserta, se modifica o se borra
     --Solo se permite si el Check devuelve True--
