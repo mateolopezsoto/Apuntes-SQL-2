@@ -1,6 +1,6 @@
 # Apuntes-SQL-2
 DDL 
-	DDL es un lenguaje (DATA DEFINITION LANGUAGE) es un tipo de lenguaje que permite a los usuarios de las bases de datos implementar las tareas de definición de las estructuras que almacenarán los datos y sus procedimientos
+	DDL es un lenguaje (DATA DEFINITION LANGUAGE) es un tipo de lenguaje que permite a los usuarios de las bases de datos implementar las tareas de definición de las estructuras que almacenarán los datos y sus procedimientos o funciones que nos permitirán consultar la base de datos
 	
 	CREATE DOMAIN --> Sirve para crear dominios diferentes a los ya existentes.
 		CREATE DOMAIN Nombre_del_dominio Tipo_de_Dato;
@@ -45,20 +45,20 @@ RESTRICCIONES: Existen diferentes tipo de restricciones. Los más comunes son lo
 		ii. NO ACTION = El valor por defecto. No permite eliminar o actualizar el dato si algún objeto depende de él
 		iii. SET NULL = Se permite el borrado o modificado y las columnas de la clave externa se establecen como NULL
 		iiii. SET DEFAULT = Parecido a SET NULL, con la única diferencia de que las columnas de la clave externa se establecen con su valor predeterminado. Si no tienen este valor saldrá un error
-	
+  
+	  - Restricción de comprobación --- Se aplican a cada fila que se inserta, se modifica o se borra
+	    --Solo se permite si el Check devuelve True--
+	    Valor predeterminado = [NOT DEFERRABLE] y [INITIALLY INMEDIATE]
+	    Si el valor es DEFERRABLE, la comprobación de la restricción se puede realizar al final de la transacción
+	 [CONSTRAINT <nombre-de-la-restriccion>]
+	    CHECK predicado (atributos)
+	  [[NOT] DEFERRABLE]
+	  [INITIALLY INMEDIATE | DEFERRABLE]
+	  (DEFERRABLE + INITIALLY INMEDIATE = NOT DEFERRABLE)
+	  Para posponer la comprobación sería DEFERRABLE + INITIALLY DEFERRABLE
+	  
 * Cabe destacar que podemos utilizar CONSTRAINT para todas estas restricciones, aunque su uso no sea obligatorio. El único caso cuyo empleo es obligatorio es si tenemos más de una clave primaria
 ** Las restricciones se pueden colocar tanto en la creación de la tabla como realizando un ALTER TABLE
-  
-  Restricción de comprobación: Se aplican a cada fila que se inserta, se modifica o se borra
-    --Solo se permite si el Check devuelve True--
-    Valor predeterminado = [NOT DEFERRABLE] y [INITIALLY INMEDIATE]
-    Si el valor es DEFERRABLE, la comprobación de la restricción se puede realizar al final de la transacción
- [CONSTRAINT <nombre-de-la-restriccion>]
-    CHECK predicado (atributos)
-  [[NOT] DEFERRABLE]
-  [INITIALLY INMEDIATE | DEFERRABLE]
-  (DEFERRABLE + INITIALLY INMEDIATE = NOT DEFERRABLE)
-  Para posponer la comprobación sería DEFERRABLE + INITIALLY DEFERRABLE
   
   **Para borrar una tabla**
   
